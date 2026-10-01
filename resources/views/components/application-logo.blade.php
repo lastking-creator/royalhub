@@ -1,0 +1,1 @@
+<img src="{{ asset('images/cbo-logo.png') }}" alt="CBO Logo" {{ $attributes->merge(['class' => 'h-16 w-auto mx-auto']) }}>
