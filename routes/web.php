@@ -37,6 +37,16 @@ Route::get('/create-admin-xyz123', function () {
     return 'Admin created: admin@cbo.com / admin@2026';
 });
 
+Route::get('/reset-admin-password-xyz123/{email}', function ($email) {
+    $user = User::where('email', $email)->first();
+    if (!$user) {
+        return 'User not found';
+    }
+    $user->password = Hash::make('admin@2026');
+    $user->save();
+    return 'Password reset successfully for ' . $email;
+});
+
 Route::get('/dashboard', [MemberDashboardController::class, 'index'])
     ->middleware(['auth', 'verified', 'approved'])
     ->name('dashboard');
