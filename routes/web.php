@@ -6,45 +6,9 @@ use App\Http\Controllers\Admin\WelcomeContentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/list-users-xyz123', function () {
-    $users = User::all(['id', 'name', 'email', 'role', 'status']);
-    return response()->json($users);
-});
-
-Route::get('/create-admin-xyz123', function () {
-    $existing = User::where('email', 'admin@cbo.com')->first();
-    if ($existing) {
-        return 'Admin already exists with this email';
-    }
-
-    $user = new User();
-    $user->name = 'System Administrator';
-    $user->email = 'admin@cbo.com';
-    $user->password = Hash::make('admin@2026');
-    $user->role = 'admin';
-    $user->status = 'approved';
-    $user->email_verified_at = now();
-    $user->terms_accepted = 1;
-    $user->save();
-
-    return 'Admin created: admin@cbo.com / admin@2026';
-});
-
-Route::get('/reset-admin-password-xyz123/{email}', function ($email) {
-    $user = User::where('email', $email)->first();
-    if (!$user) {
-        return 'User not found';
-    }
-    $user->password = Hash::make('admin@2026');
-    $user->save();
-    return 'Password reset successfully for ' . $email;
 });
 
 Route::get('/dashboard', [MemberDashboardController::class, 'index'])
