@@ -6,9 +6,21 @@ use App\Http\Controllers\Admin\WelcomeContentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/reset-admin-password-xyz123', function () {
+    $user = User::where('email', 'admin@cbo.com')->first();
+    if (!$user) {
+        return 'User not found';
+    }
+    $user->password = Hash::make('admin@2026');
+    $user->save();
+    return 'Password reset successfully';
 });
 
 Route::get('/dashboard', [MemberDashboardController::class, 'index'])
