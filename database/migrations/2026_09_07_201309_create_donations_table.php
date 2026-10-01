@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('donations', function (Blueprint $table) {
-    $table->foreignId('project_id')->nullable()->constrained()->nullOnDelete();
-            
+        Schema::create('donations', function (Blueprint $table) {
+            $table->id();
+
             // Allow both registered members and external donors
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('donor_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('project_id')->nullable()->constrained()->nullOnDelete();
-            
+
             $table->string('type')->default('cash'); // cash, in-kind
             $table->decimal('amount', 12, 2)->default(0.00);
             $table->string('purpose')->nullable(); // Dues, Welfare, Registration Fee
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('reference_number')->nullable();
             $table->text('description')->nullable();
             $table->timestamp('donated_at')->useCurrent();
-            
+
             $table->timestamps();
         });
     }
