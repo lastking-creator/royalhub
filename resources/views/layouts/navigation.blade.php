@@ -129,6 +129,30 @@
                 <x-responsive-nav-link :href="route('admin.programs')" :active="request()->routeIs('admin.programs*')">
                     {{ __('Programs & Projects') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.events.index')" :active="request()->routeIs('admin.events*')">
+                    {{ __('Events') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.finance')" :active="request()->routeIs('admin.finance*')">
+                    {{ __('Finance') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.grants')" :active="request()->routeIs('admin.grants*')">
+                    {{ __('Grants') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.communications')" :active="request()->routeIs('admin.communications*')">
+                    {{ __('Communications') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.documents')" :active="request()->routeIs('admin.documents*')">
+                    {{ __('Compliance') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.reports')" :active="request()->routeIs('admin.reports*')">
+                    {{ __('Analytics') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.accounts')" :active="request()->routeIs('admin.accounts*')">
+                    {{ __('Accounts') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.welcome.edit')" :active="request()->routeIs('admin.welcome.edit')">
+                    {{ __('Welcome Editor') }}
+                </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
