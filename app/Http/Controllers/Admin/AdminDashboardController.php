@@ -52,15 +52,15 @@ class AdminDashboardController extends Controller
     {
         if (!$user->registration_number) {
             $lastNumber = User::whereNotNull('registration_number')
-                ->where('registration_number', 'like', 'MCHV/%')
+                ->where('registration_number', 'like', 'JVT/%')
                 ->get()
                 ->map(function ($u) {
-                    return (int) str_replace('MCHV/', '', $u->registration_number);
+                    return (int) str_replace('JVT/', '', $u->registration_number);
                 })
                 ->max();
 
             $nextId = ($lastNumber ?? 0) + 1;
-            $regNumber = 'MCHV/' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+            $regNumber = 'JVT/' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
         } else {
             $regNumber = $user->registration_number;
         }
