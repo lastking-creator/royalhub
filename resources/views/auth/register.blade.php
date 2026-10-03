@@ -50,41 +50,20 @@
                         </template>
                     </div>
 
-                    <div class="flex-1 space-y-2">
-                        <!-- Choose from storage -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-600 mb-1">Upload from device</label>
-                            <input
-                                type="file"
-                                name="passport_photo"
-                                accept="image/*"
-                                class="block w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
-                                @change="preview = $event.target.files.length ? URL.createObjectURL($event.target.files[0]) : null"
-                            >
-                        </div>
-
-                        <!-- Take a photo with camera -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-600 mb-1">Or take a photo now</label>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                capture="user"
-                                class="block w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
-                                @change="
-                                    if ($event.target.files.length) {
-                                        preview = URL.createObjectURL($event.target.files[0]);
-                                        document.querySelector('input[name=passport_photo]').files = $event.target.files;
-                                    }
-                                "
-                            >
-                        </div>
+                    <div class="flex-1">
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Upload or take a photo</label>
+                        <input
+                            type="file"
+                            name="passport_photo"
+                            accept="image/*"
+                            class="block w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                            @change="preview = $event.target.files.length ? URL.createObjectURL($event.target.files[0]) : null"
+                        >
                     </div>
                 </div>
                 <x-input-error :messages="$errors->get('passport_photo')" class="mt-2" />
             </div>
         </div>
-
         <!-- 2. CONTACT DETAILS -->
         <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h3 class="text-sm font-bold text-emerald-800 uppercase tracking-wider mb-3">2. Contact Details</h3>
