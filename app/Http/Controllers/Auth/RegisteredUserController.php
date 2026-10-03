@@ -44,8 +44,14 @@ class RegisteredUserController extends Controller
         'next_of_kin_phone' => ['required', 'string', 'max:20'],
         'occupation' => ['nullable', 'string', 'max:255'],
         'talents_skills' => ['nullable', 'string'],
+        'passport_photo' => ['nullable', 'image', 'max:5120'],
         'terms_accepted' => ['accepted'],
     ]);
+
+    $passportPhotoPath = null;
+    if ($request->hasFile('passport_photo')) {
+        $passportPhotoPath = $request->file('passport_photo')->store('passport-photos', 'public');
+    }
 
     $user = User::create([
         'name' => $request->name,
@@ -61,6 +67,7 @@ class RegisteredUserController extends Controller
         'next_of_kin_phone' => $request->next_of_kin_phone,
         'occupation' => $request->occupation,
         'talents_skills' => $request->talents_skills,
+        'passport_photo' => $passportPhotoPath,
         'terms_accepted' => $request->boolean('terms_accepted'),
         'role' => 'member',
     ]);

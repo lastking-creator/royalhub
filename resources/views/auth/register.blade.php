@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}" class="space-y-6 max-w-2xl mx-auto py-4">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" class="space-y-6 max-w-2xl mx-auto py-4">
         @csrf
 
         <h2 class="text-2xl font-bold text-gray-800 text-center border-b pb-3">CBO Membership Registration</h2>
@@ -31,6 +31,57 @@
                     <x-text-input id="physical_address" class="block mt-1 w-full text-sm" type="text" name="physical_address" :value="old('physical_address')" required />
                     <x-input-error :messages="$errors->get('physical_address')" class="mt-1" />
                 </div>
+            </div>
+        </div>
+
+        <!-- PASSPORT PHOTO -->
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h3 class="text-sm font-bold text-emerald-800 uppercase tracking-wider mb-3">Passport Photo</h3>
+            <div x-data="{ preview: null }">
+                <div class="flex items-center gap-4">
+                    <div class="shrink-0">
+                        <template x-if="preview">
+                            <img :src="preview" class="h-24 w-24 object-cover rounded-md border border-gray-300">
+                        </template>
+                        <template x-if="! preview">
+                            <div class="h-24 w-24 flex items-center justify-center rounded-md border border-dashed border-gray-300 text-gray-400 text-xs text-center">
+                                No photo yet
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="flex-1 space-y-2">
+                        <!-- Choose from storage -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Upload from device</label>
+                            <input
+                                type="file"
+                                name="passport_photo"
+                                accept="image/*"
+                                class="block w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                                @change="preview = $event.target.files.length ? URL.createObjectURL($event.target.files[0]) : null"
+                            >
+                        </div>
+
+                        <!-- Take a photo with camera -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Or take a photo now</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                capture="user"
+                                class="block w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                                @change="
+                                    if ($event.target.files.length) {
+                                        preview = URL.createObjectURL($event.target.files[0]);
+                                        document.querySelector('input[name=passport_photo]').files = $event.target.files;
+                                    }
+                                "
+                            >
+                        </div>
+                    </div>
+                </div>
+                <x-input-error :messages="$errors->get('passport_photo')" class="mt-2" />
             </div>
         </div>
 
