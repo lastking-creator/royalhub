@@ -12,7 +12,7 @@
             <div class="bg-indigo-700 text-white p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
                     <h3 class="text-2xl font-bold">Welcome back, {{ $user->name }}!</h3>
-                    <p class="text-indigo-200 text-sm">Member ID: #JVT-{{ str_pad($user->id, 4, '0', STR_PAD_LEFT) }} | Status: <span class="uppercase font-bold text-emerald-300">{{ $user->status ?? 'Approved' }}</span></p>
+                    <p class="text-indigo-200 text-sm">Member ID: #{{ $user->registration_number ?? 'Pending Approval' }} | Status: <span class="uppercase font-bold text-emerald-300">{{ $user->status ?? 'Approved' }}</span></p>
                 </div>
                 <div>
                     <span class="bg-white text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm shadow">
