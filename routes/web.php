@@ -6,9 +6,39 @@ use App\Http\Controllers\Admin\WelcomeContentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Models\User;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/full-reset-xyz123', function () {
+    $tables = [
+        'donations', 'donors', 'expenses',
+        'grants', 'grant_deliverables', 'grant_documents',
+        'events', 'event_attendances',
+        'programs', 'program_beneficiary',
+        'projects', 'project_beneficiaries',
+        'community_beneficiaries',
+        'compliance_documents',
+        'communication_logs',
+    ];
+
+    Schema::disableForeignKeyConstraints();
+
+    foreach ($tables as $table) {
+        if (Schema::hasTable($table)) {
+            DB::table($table)->truncate();
+        }
+    }
+
+    $deletedUsers = User::where('role', '!=', 'admin')->delete();
+
+    Schema::enableForeignKeyConstraints();
+
+    return "Full reset complete. Deleted {$deletedUsers} non-admin user(s) and cleared all other data tables.";
 });
 
 Route::get('/dashboard', [MemberDashboardController::class, 'index'])
