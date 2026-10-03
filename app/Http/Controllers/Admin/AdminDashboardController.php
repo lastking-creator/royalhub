@@ -53,7 +53,7 @@ class AdminDashboardController extends Controller
         if (!$user->registration_number) {
             $year = date('Y');
             $nextId = User::whereNotNull('registration_number')->count() + 1;
-            $regNumber = 'JVT-' . $year . '-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+            $regNumber = 'MCHV/' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
         } else {
             $regNumber = $user->registration_number;
         }
@@ -93,7 +93,14 @@ class AdminDashboardController extends Controller
     {
         $member = User::findOrFail($id);
 
-        return view('admin.members.pdf-registration', compact('member'));
+        $passportPhotoBase64 = null;
+        if ($member->passport_photo && Storage::disk('public')->exists($member->passport_photo)) {
+            $fileContents = Storage::disk('public')->get($member->passport_photo);
+            $mimeType = Storage::disk('public')->mimeType($member->passport_photo);
+            $passportPhotoBase64 = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
+        }
+
+        return view('admin.members.pdf-registration', compact('member', 'passportPhotoBase64'));
     }
 
     // Programs & Projects

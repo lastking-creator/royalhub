@@ -95,7 +95,12 @@
     </div>
 
     <!-- Document Header with Logo -->
-    <div class="header">
+    <div class="header" style="position: relative;">
+        @if($passportPhotoBase64)
+            <div style="position: absolute; top: 0; right: 0; width: 90px; height: 110px; border: 1px solid #d1d5db; padding: 2px;">
+                <img src="{{ $passportPhotoBase64 }}" style="width: 100%; height: 100%; object-fit: cover;" alt="Member Photo">
+            </div>
+        @endif
         <div style="margin-bottom: 10px;">
             <img src="{{ asset('images/cbo-logo.png') }}" alt="CBO Logo" style="max-height: 80px; width: auto; display: inline-block;">
         </div>
