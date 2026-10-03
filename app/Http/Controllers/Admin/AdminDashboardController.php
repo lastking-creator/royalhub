@@ -51,8 +51,15 @@ class AdminDashboardController extends Controller
     public function approveMember(User $user)
     {
         if (!$user->registration_number) {
-            $year = date('Y');
-            $nextId = User::whereNotNull('registration_number')->count() + 1;
+            $lastNumber = User::whereNotNull('registration_number')
+                ->where('registration_number', 'like', 'MCHV/%')
+                ->get()
+                ->map(function ($u) {
+                    return (int) str_replace('MCHV/', '', $u->registration_number);
+                })
+                ->max();
+
+            $nextId = ($lastNumber ?? 0) + 1;
             $regNumber = 'MCHV/' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
         } else {
             $regNumber = $user->registration_number;
