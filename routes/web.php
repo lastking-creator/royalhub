@@ -21,6 +21,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/set-admin-regno-xyz123', function () {
+    $admin = \App\Models\User::where('role', 'admin')->first();
+    if (!$admin) {
+        return 'No admin found';
+    }
+    $admin->registration_number = 'JVT/0000';
+    $admin->save();
+    return "Admin registration number set to {$admin->registration_number}";
+});
+
 // Admin Route Group
 Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->group(function () {
     // Admin Dashboard (Metrics & Alerts)
