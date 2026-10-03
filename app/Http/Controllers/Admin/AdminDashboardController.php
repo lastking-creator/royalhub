@@ -97,18 +97,18 @@ class AdminDashboardController extends Controller
      * Display printable member registration form.
      */
     public function printRegistrationForm($id)
-    {
-        $member = User::findOrFail($id);
+{
+    $member = User::findOrFail($id);
 
-        $passportPhotoBase64 = null;
-        if ($member->passport_photo && Storage::disk('public')->exists($member->passport_photo)) {
-            $fileContents = Storage::disk('public')->get($member->passport_photo);
-            $mimeType = Storage::disk('public')->mimeType($member->passport_photo);
-            $passportPhotoBase64 = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
-        }
-
-        return view('admin.members.pdf-registration', compact('member', 'passportPhotoBase64'));
+    $passportPhotoBase64 = null;
+    if ($member->passport_photo && Storage::disk('public')->exists($member->passport_photo)) {
+        $fileContents = Storage::disk('public')->get($member->passport_photo);
+        $mimeType = Storage::disk('public')->mimeType($member->passport_photo);
+        $passportPhotoBase64 = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
     }
+
+    return view('admin.members.pdf-registration', compact('member', 'passportPhotoBase64'));
+}
 
     // Programs & Projects
     public function programs()
