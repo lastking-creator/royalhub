@@ -34,6 +34,8 @@ class User extends Authenticatable
     'next_of_kin_phone',
     'occupation',
     'talents',
+    'talents_skills',
+    'passport_photo',
     'terms_accepted',
 ];
 
