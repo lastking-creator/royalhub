@@ -51,6 +51,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/check-mail-config-xyz123', function () {
+    return [
+        'MAIL_MAILER' => config('mail.default'),
+        'MAIL_HOST' => config('mail.mailers.smtp.host'),
+        'MAIL_PORT' => config('mail.mailers.smtp.port'),
+        'MAIL_USERNAME' => config('mail.mailers.smtp.username'),
+        'MAIL_PASSWORD_length' => strlen(config('mail.mailers.smtp.password') ?? ''),
+        'MAIL_PASSWORD_preview' => substr(config('mail.mailers.smtp.password') ?? '', 0, 4) . '...',
+        'MAIL_ENCRYPTION' => config('mail.mailers.smtp.encryption'),
+        'MAIL_FROM_ADDRESS' => config('mail.from.address'),
+        'MAIL_FROM_NAME' => config('mail.from.name'),
+    ];
+});
+
 // Admin Route Group
 Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->group(function () {
     // Admin Dashboard (Metrics & Alerts)
